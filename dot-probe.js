@@ -69,7 +69,7 @@ var dot_probe = (function() {
         }
         stim.push(curr_pushed);
       }
-      timeline_variables.push({'stim': stim})
+      timeline_variables.push({'stim': stim, 'valence': valence_combo})
     }
   }
   timeline_variables = jsPsych.randomization.shuffle(timeline_variables);
@@ -147,12 +147,17 @@ var dot_probe = (function() {
 
       // Get stim and determine location
       var stim = jsPsych.timelineVariable('stim');
+      var valence = jsPsych.timelineVariable('valence');
       if (Math.random() < 0.5) {
         dot_probe_data.top_stim = stim[0];
+        dot_probe_data.top_valence = valence[0];
         dot_probe_data.bottom_stim = stim[1];
+        dot_probe_data.bottom_valence = valence[1];
       } else {
         dot_probe_data.top_stim = stim[1];
+        dot_probe_data.top_valence = valence[1];
         dot_probe_data.bottom_stim = stim[0];
+        dot_probe_data.bottom_valence = valence[0];
       }
 
       // Draw stim
