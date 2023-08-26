@@ -286,6 +286,31 @@ var dot_probe = (function() {
     }
   }
 
-  var timeline = [credit_card, instructions, dot_probe_practice, post_practice_instructions, dot_probe_sequence, unresize];
+  var mark_dot_probe_start = {
+    type: jsPsychCallFunction,
+    func: function() {},
+    on_finish: function(data) {
+      data.expt_part = 'dot probe start'
+    }
+  }
+
+  var mark_dot_probe_end = {
+    type: jsPsychCallFunction,
+    func: function() {},
+    on_finish: function(data) {
+      data.expt_part = 'dot probe end'
+    }
+  }
+
+  var timeline = [
+    credit_card,
+    instructions,
+    dot_probe_practice,
+    post_practice_instructions,
+    mark_dot_probe_start,
+    dot_probe_sequence,
+    mark_dot_probe_end,
+    unresize
+  ];
   return({timeline: timeline});
 })();
