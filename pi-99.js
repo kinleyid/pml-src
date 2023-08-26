@@ -18,7 +18,7 @@ var pi_99 = (
 					"initially feels true of the real world. There are no wrong " +
 					"answers. There's no need to overthink.",
 				page_2: 
-					"Good work!" +
+					"Good work! " +
 					"Remember, when in doubt, go with what initially feels most accurate to " +
 					"the real world. You can be totally honest.",
 				page_3:
