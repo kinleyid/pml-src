@@ -214,10 +214,14 @@ var dot_probe = (function() {
       );
     },
     on_finish: function(data) {
-      if (data.response == 'z') {
-        dot_probe_data.response_direction = 'left';
+      if (data.response) {
+        if (data.response == 'z') {
+          dot_probe_data.response_direction = 'left';
+        } else {
+          dot_probe_data.response_direction = 'right';
+        }
       } else {
-        dot_probe_data.response_direction = 'right';
+        dot_probe_data.response_direction = 'NA';
       }
       dot_probe_data.rt = data.rt;
     }
@@ -227,10 +231,11 @@ var dot_probe = (function() {
     type: jsPsychCallFunction,
     func: function() {},
     on_finish: function(data) {
-      var k, dp_k;
+      data.expt_part = 'dot-probe-data';
+      data.response = {};
+      var k;
       for (k in dot_probe_data) {
-        dp_k = 'dp_' + k;
-        data[dp_k] = dot_probe_data[k];
+        data.response[k] = dot_probe_data[k];
       }
     }
   }
@@ -251,7 +256,12 @@ var dot_probe = (function() {
         }
       }
     }],
-    timeline_variables: [{stim: ['#####', '#####']}],
+    timeline_variables: [
+      {
+        stim: ['#####', '#####'],
+        valence: ['NA', 'NA']
+      }
+    ],
     repetitions: 5
   }
 

@@ -145,7 +145,7 @@ var pi_99 = (
 					el.style.marginBottom = '100px';
 				},
 				on_finish: function(data) {
-					data.expt_part = 'pi-99'
+					data.expt_part = 'pi-99';
 					var el = jsPsych.getDisplayElement();
 					el.style.marginTop = '';
 					el.style.marginBottom = '';
