@@ -136,7 +136,7 @@ var dot_probe = (function() {
 
   var dot_probe_stim = {
     type: jsPsychCanvasKeyboardResponse,
-    trial_duration: 100,
+    trial_duration: 500,
     choices: 'NO_KEYS',
     stimulus: function(canv) {
       // Set up canvas
