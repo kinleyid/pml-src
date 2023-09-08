@@ -148,6 +148,7 @@ var dot_probe = (function() {
       // Get stim and determine location
       var stim = jsPsych.timelineVariable('stim');
       var valence = jsPsych.timelineVariable('valence');
+      dot_probe_data.valence_combo = valence.toString();
       if (Math.random() < 0.5) {
         dot_probe_data.top_stim = stim[0];
         dot_probe_data.top_valence = valence[0];
@@ -195,6 +196,7 @@ var dot_probe = (function() {
         probe_location_ppn_x = 1/2 * canv.width;
         probe_location_ppn_y = 0.7 * canv.height;
       }
+      dot_probe_data.probe_replaces = dot_probe_data[dot_probe_data.probe_location + '_valence'];
 
       // ...and direction
       var probe;
