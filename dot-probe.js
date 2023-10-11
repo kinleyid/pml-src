@@ -165,12 +165,12 @@ var dot_probe = (function() {
       ctx.fillText(
         dot_probe_data.top_stim,
         1/2 * canv.width,
-        0.3 * canv.height
+        1/2 * canv.height - 82
       );
       ctx.fillText(
         dot_probe_data.bottom_stim,
         1/2 * canv.width,
-        0.7 * canv.height
+        1/2 * canv.height + 82
       );
     }
   }
@@ -190,11 +190,11 @@ var dot_probe = (function() {
       if (Math.random() < 0.5) {
         dot_probe_data.probe_location = 'top';
         probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 0.3 * canv.height;
+        probe_location_ppn_y = 1/2 * canv.height - 82;
       } else {
         dot_probe_data.probe_location = 'bottom';
         probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 0.7 * canv.height;
+        probe_location_ppn_y = 1/2 * canv.height + 82;
       }
       dot_probe_data.probe_replaces = dot_probe_data[dot_probe_data.probe_location + '_valence'];
 
@@ -202,10 +202,10 @@ var dot_probe = (function() {
       var probe;
       if (Math.random() < 0.5) {
         dot_probe_data.probe_direction = 'left';
-        probe = '<<';
+        probe = '<';
       } else {
         dot_probe_data.probe_direction = 'right';
-        probe = '>>';
+        probe = '>';
       }
 
       // Draw probe
