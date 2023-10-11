@@ -202,10 +202,10 @@ var dot_probe = (function() {
       var probe;
       if (Math.random() < 0.5) {
         dot_probe_data.probe_direction = 'left';
-        probe = '<';
+        probe = '<<';
       } else {
         dot_probe_data.probe_direction = 'right';
-        probe = '>';
+        probe = '>>';
       }
 
       // Draw probe
@@ -253,9 +253,14 @@ var dot_probe = (function() {
       ],
       loop_function: function(data) {
         var last_trial = data.trials[4];
-        if (last_trial.dp_response_direction != last_trial.dp_probe_direction) {
+        var should_repeat;
+        if (last_trial.response.response_direction != last_trial.response.probe_direction) {
           alert('Remember, press "z" when the arrows point to the left ("<<") and press "m" when the arrows point to the right (">>")')
+          should_repeat = true;
+        } else {
+          should_repeat = false;
         }
+        return(should_repeat);
       }
     }],
     timeline_variables: [
