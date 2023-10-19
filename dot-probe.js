@@ -45,10 +45,11 @@ var dot_probe = (function() {
     ['neutral', 'negative'],
     ['neutral', 'neutral']
   ];
-  var n_trials_per_type = 25;
-  var i, valence_combo, j, valence_i, stim;
+  var n_trials_per_type = 24;
+  var i, valence_combo, j, valence_i, stim, conds;
   for (i = 0; i < valence_combos.length; i++) {
     valence_combo = valence_combos[i];
+    conds = jsPsych.randomization.repeat(['cong', 'incong'], n_trials_per_type/2);
     for (j = 0; j < n_trials_per_type; j++) {
       // Determine number of characters
       while (true) {
@@ -69,7 +70,7 @@ var dot_probe = (function() {
         }
         stim.push(curr_pushed);
       }
-      timeline_variables.push({'stim': stim, 'valence': valence_combo})
+      timeline_variables.push({'stim': stim, 'valence': valence_combo, 'cond': conds[j]})
     }
   }
   timeline_variables = jsPsych.randomization.shuffle(timeline_variables);
@@ -165,12 +166,12 @@ var dot_probe = (function() {
       ctx.fillText(
         dot_probe_data.top_stim,
         1/2 * canv.width,
-        1/2 * canv.height - 82
+        1/2 * canv.height - 100
       );
       ctx.fillText(
         dot_probe_data.bottom_stim,
         1/2 * canv.width,
-        1/2 * canv.height + 82
+        1/2 * canv.height + 100
       );
     }
   }
@@ -187,14 +188,38 @@ var dot_probe = (function() {
 
       // Determine probe location...
       var probe_location_ppn_y, probe_location_ppn_x;
-      if (Math.random() < 0.5) {
-        dot_probe_data.probe_location = 'top';
-        probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 1/2 * canv.height - 82;
+      var cond = jsPsych.timelineVariable('cond');
+      var valence_combo = dot_probe_data.valence_combo.toString();
+      dot_probe_data.cond = cond;
+      if (valence_combo == 'neutral,neutral') {
+        // Random
+        if (Math.random() < 0.5) {
+          dot_probe_data.probe_location = 'top';
+        } else {
+          dot_probe_data.probe_location = 'bottom';
+        }
       } else {
-        dot_probe_data.probe_location = 'bottom';
+        // Condition-wise
+        if (cond == 'cong') {
+          if (dot_probe_data.top_valence == 'neutral') {
+            dot_probe_data.probe_location = 'bottom';
+          } else {
+            dot_probe_data.probe_location = 'top';
+          }
+        } else {
+          if (dot_probe_data.top_valence == 'neutral') {
+            dot_probe_data.probe_location = 'top';
+          } else {
+            dot_probe_data.probe_location = 'bottom';
+          }
+        }
+      }
+      if (dot_probe_data.probe_location = 'top') {
         probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 1/2 * canv.height + 82;
+        probe_location_ppn_y = 1/2 * canv.height - 100;
+      } else {
+        probe_location_ppn_x = 1/2 * canv.width;
+        probe_location_ppn_y = 1/2 * canv.height + 100;
       }
       dot_probe_data.probe_replaces = dot_probe_data[dot_probe_data.probe_location + '_valence'];
 
