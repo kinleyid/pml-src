@@ -87,7 +87,7 @@ var dot_probe = (function() {
       pixels_per_unit: 100,
   };
 
-  var stim_font = 'bold 48px Courier New';
+  var stim_font = 'bold 36px Courier New';
   var dot_probe_data = {}
   var trial_n = 0;
 
@@ -166,12 +166,12 @@ var dot_probe = (function() {
       ctx.fillText(
         dot_probe_data.top_stim,
         1/2 * canv.width,
-        1/2 * canv.height - 100
+        1/2 * canv.height - 120
       );
       ctx.fillText(
         dot_probe_data.bottom_stim,
         1/2 * canv.width,
-        1/2 * canv.height + 100
+        1/2 * canv.height + 120
       );
     }
   }
@@ -216,10 +216,10 @@ var dot_probe = (function() {
       }
       if (dot_probe_data.probe_location = 'top') {
         probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 1/2 * canv.height - 100;
+        probe_location_ppn_y = 1/2 * canv.height - 120;
       } else {
         probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 1/2 * canv.height + 100;
+        probe_location_ppn_y = 1/2 * canv.height + 120;
       }
       dot_probe_data.probe_replaces = dot_probe_data[dot_probe_data.probe_location + '_valence'];
 
