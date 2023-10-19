@@ -166,12 +166,12 @@ var dot_probe = (function() {
       ctx.fillText(
         dot_probe_data.top_stim,
         1/2 * canv.width,
-        1/2 * canv.height - 140
+        1/2 * canv.height - 160
       );
       ctx.fillText(
         dot_probe_data.bottom_stim,
         1/2 * canv.width,
-        1/2 * canv.height + 140
+        1/2 * canv.height + 160
       );
     }
   }
@@ -216,10 +216,10 @@ var dot_probe = (function() {
       }
       if (dot_probe_data.probe_location = 'top') {
         probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 1/2 * canv.height - 140;
+        probe_location_ppn_y = 1/2 * canv.height - 160;
       } else {
         probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 1/2 * canv.height + 140;
+        probe_location_ppn_y = 1/2 * canv.height + 160;
       }
       dot_probe_data.probe_replaces = dot_probe_data[dot_probe_data.probe_location + '_valence'];
 
