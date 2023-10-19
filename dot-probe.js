@@ -191,7 +191,7 @@ var dot_probe = (function() {
       var cond = jsPsych.timelineVariable('cond');
       var valence_combo = dot_probe_data.valence_combo.toString();
       dot_probe_data.cond = cond;
-      if (valence_combo == 'neutral,neutral') {
+      if (valence_combo == 'neutral,neutral' | valence_combo == 'NA,NA') {
         // Random
         if (Math.random() < 0.5) {
           dot_probe_data.probe_location = 'top';
@@ -214,7 +214,7 @@ var dot_probe = (function() {
           }
         }
       }
-      if (dot_probe_data.probe_location = 'top') {
+      if (dot_probe_data.probe_location == 'top') {
         probe_location_ppn_x = 1/2 * canv.width;
         probe_location_ppn_y = 1/2 * canv.height - 160;
       } else {
