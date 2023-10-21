@@ -211,11 +211,10 @@ var dot_probe = (function() {
         }
       }
       var probe;
-      if (Math.random() < 0.5) {
-        dot_probe_data.probe_direction = 'left';
+      var direction = jsPsych.timelineVariable('direction');
+      if (direction == 'left') {
         probe = 'R';
       } else {
-        dot_probe_data.probe_direction = 'right';
         probe = 'P';
       }
       dot_probe_data.probe = probe;
