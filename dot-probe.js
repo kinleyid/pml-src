@@ -87,6 +87,8 @@ var dot_probe = (function() {
       pixels_per_unit: 100,
   };
 
+  var visual_sep = 40;
+
   var stim_font = 'bold 36px Courier New';
   var dot_probe_data = {}
   var trial_n = 0;
@@ -163,15 +165,18 @@ var dot_probe = (function() {
       }
 
       // Draw stim
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'right';
       ctx.fillText(
         dot_probe_data.top_stim,
-        1/2 * canv.width,
-        1/2 * canv.height - 160
+        1/2 * canv.width - visual_sep/2,
+        1/2 * canv.height
       );
+      ctx.textAlign = 'left';
       ctx.fillText(
         dot_probe_data.bottom_stim,
-        1/2 * canv.width,
-        1/2 * canv.height + 160
+        1/2 * canv.width + visual_sep/2,
+        1/2 * canv.height
       );
     }
   }
@@ -194,32 +199,32 @@ var dot_probe = (function() {
       if (valence_combo == 'neutral,neutral' | valence_combo == 'NA,NA') {
         // Random
         if (Math.random() < 0.5) {
-          dot_probe_data.probe_location = 'top';
+          dot_probe_data.probe_location = 'left';
         } else {
-          dot_probe_data.probe_location = 'bottom';
+          dot_probe_data.probe_location = 'right';
         }
       } else {
         // Condition-wise
         if (cond == 'cong') {
           if (dot_probe_data.top_valence == 'neutral') {
-            dot_probe_data.probe_location = 'bottom';
+            dot_probe_data.probe_location = 'right';
           } else {
-            dot_probe_data.probe_location = 'top';
+            dot_probe_data.probe_location = 'left';
           }
         } else {
           if (dot_probe_data.top_valence == 'neutral') {
-            dot_probe_data.probe_location = 'top';
+            dot_probe_data.probe_location = 'left';
           } else {
-            dot_probe_data.probe_location = 'bottom';
+            dot_probe_data.probe_location = 'right';
           }
         }
       }
-      if (dot_probe_data.probe_location == 'top') {
-        probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 1/2 * canv.height - 160;
+      if (dot_probe_data.probe_location == 'left') {
+        probe_location_ppn_x = 1/2 * canv.width - visual_sep/2;
+        probe_location_ppn_y = 1/2 * canv.height;
       } else {
-        probe_location_ppn_x = 1/2 * canv.width;
-        probe_location_ppn_y = 1/2 * canv.height + 160;
+        probe_location_ppn_x = 1/2 * canv.width + visual_sep;
+        probe_location_ppn_y = 1/2 * canv.height;
       }
       dot_probe_data.probe_replaces = dot_probe_data[dot_probe_data.probe_location + '_valence'];
 
@@ -234,6 +239,8 @@ var dot_probe = (function() {
       }
 
       // Draw probe
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'center';
       ctx.fillText(
         probe,
         probe_location_ppn_x,
