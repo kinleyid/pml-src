@@ -297,7 +297,8 @@ var dot_probe = (function() {
       cond: ['cong'],
       location: ['left', 'right'],
       direction: ['left', 'right']
-    })
+    }),
+    randomize_order: true,
   }
 
   var post_practice_instructions = {
