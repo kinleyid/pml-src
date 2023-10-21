@@ -89,7 +89,7 @@ var dot_probe = (function() {
 
   var word_sep = 100;
 
-  var stim_font = 'bold 36px Courier New';
+  var stim_font = 'bold 24px Courier New';
   var dot_probe_data = {}
   var trial_n = 0;
 
