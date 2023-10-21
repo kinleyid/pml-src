@@ -87,7 +87,7 @@ var dot_probe = (function() {
       pixels_per_unit: 100,
   };
 
-  var word_sep = 40;
+  var word_sep = 100;
 
   var stim_font = 'bold 36px Courier New';
   var dot_probe_data = {}
@@ -163,6 +163,7 @@ var dot_probe = (function() {
         dot_probe_data.right_stim = stim[0];
         dot_probe_data.right_valence = valence[0];
       }
+      dot_probe_data.n_char = dot_probe_data.left_stim.length;
 
       // Draw stim
       ctx.textBaseline = 'middle';
