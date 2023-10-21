@@ -228,7 +228,7 @@ var dot_probe = (function() {
         probe = 'P';
       }
 
-      var n_spaces = Math.floor(dot_probe_data.left_stim.length);
+      var n_spaces = Math.floor(dot_probe_data.left_stim.length/2);
       if (dot_probe_data.probe_location == 'left') {
         ctx.textAlign = 'right';
         probe = probe + ' '.repeat(n_spaces);
