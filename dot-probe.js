@@ -40,38 +40,37 @@ var dot_probe = (function() {
   }
 
   var timeline_variables = [];
-  var valence_combos = [
-    ['neutral', 'positive'],
-    ['neutral', 'negative'],
-    ['neutral', 'neutral']
-  ];
-  var n_trials_per_type = 24;
-  var i, valence_combo, j, valence_i, stim, conds;
-  for (i = 0; i < valence_combos.length; i++) {
-    valence_combo = valence_combos[i];
-    conds = jsPsych.randomization.repeat(['cong', 'incong'], n_trials_per_type/2);
-    for (j = 0; j < n_trials_per_type; j++) {
-      // Determine number of characters
-      while (true) {
-        n_char = Math.round(min_n_char + (max_n_char - min_n_char)*Math.random());
-        // Must be available for both valences
-        if (words_by_n_char[valence_combo[0]][n_char].length > 0) {
-          if (words_by_n_char[valence_combo[1]][n_char].length > 0) {
-            break;
-          }
+  var timeline_variables = jsPsych.randomization.factorial(
+    {
+      'valence': [['neutral', 'positive'], ['neutral', 'negative'], ['neutral', 'neutral']],
+      'cond': ['cong', 'incong'],
+      'location': ['left', 'right'],
+      'direction': ['left', 'right']
+    },
+    3
+  );
+  for (i = 0; i < timeline_variables.length; i++) {
+    valence_combo = timeline_variables[i].valence;
+    while (true) {
+      n_char = Math.round(min_n_char + (max_n_char - min_n_char)*Math.random());
+      // Must be available for both valences
+      if (words_by_n_char[valence_combo[0]][n_char].length > 0) {
+        if (words_by_n_char[valence_combo[1]][n_char].length > 0) {
+          break;
         }
       }
-      stim = [];
-      var curr_pushed;
-      for (k = 0; k < 2; k++) {
-        curr_pushed = words_by_n_char[valence_combo[k]][n_char].pop();
-        if (curr_pushed == undefined) {
-          console.log('here');
-        }
-        stim.push(curr_pushed);
-      }
-      timeline_variables.push({'stim': stim, 'valence': valence_combo, 'cond': conds[j]})
     }
+    stim = [];
+    var curr_pushed;
+    for (k = 0; k < 2; k++) {
+      // Stim will ALWAYS be neutral first
+      curr_pushed = words_by_n_char[valence_combo[k]][n_char].pop();
+      if (curr_pushed == undefined) {
+        console.log('here');
+      }
+      stim.push(curr_pushed);
+    }
+    timeline_variables[i].stim = stim;
   }
   timeline_variables = jsPsych.randomization.shuffle(timeline_variables);
 
@@ -153,8 +152,9 @@ var dot_probe = (function() {
       // Get stim and determine location
       var stim = jsPsych.timelineVariable('stim');
       var valence = jsPsych.timelineVariable('valence');
+      var location = jsPsych.timelineVariable('location'); // Location of non-neutral stimulus
       dot_probe_data.valence_combo = valence.toString();
-      if (Math.random() < 0.5) {
+      if (location == 'right') {
         dot_probe_data.left_stim = stim[0];
         dot_probe_data.left_valence = valence[0];
         dot_probe_data.right_stim = stim[1];
@@ -197,30 +197,17 @@ var dot_probe = (function() {
 
       // Determine probe location...
       var probe_location_ppn_y, probe_location_ppn_x;
+      var location = jsPsych.timelineVariable('location');
       var cond = jsPsych.timelineVariable('cond');
-      var valence_combo = dot_probe_data.valence_combo.toString();
       dot_probe_data.cond = cond;
-      if (valence_combo == 'neutral,neutral' | valence_combo == 'NA,NA') {
-        // Random
-        if (Math.random() < 0.5) {
-          dot_probe_data.probe_location = 'left';
-        } else {
-          dot_probe_data.probe_location = 'right';
-        }
+      if (cond == 'cong') {
+        dot_probe_data.probe_location = location;
       } else {
-        // Condition-wise
-        if (cond == 'cong') {
-          if (dot_probe_data.left_valence == 'neutral') {
-            dot_probe_data.probe_location = 'right';
-          } else {
-            dot_probe_data.probe_location = 'left';
-          }
+        // Opposite side of the non-neutral stimulus
+        if (location == 'left') {
+          dot_probe_data.probe_location = 'right';
         } else {
-          if (dot_probe_data.left_valence == 'neutral') {
-            dot_probe_data.probe_location = 'left';
-          } else {
-            dot_probe_data.probe_location = 'right';
-          }
+          dot_probe_data.probe_location = 'left';
         }
       }
       var probe;
