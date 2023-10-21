@@ -88,7 +88,6 @@ var dot_probe = (function() {
   };
 
   var word_sep = 40;
-  var probe_sep = 70;
 
   var stim_font = 'bold 36px Courier New';
   var dot_probe_data = {}
@@ -97,8 +96,8 @@ var dot_probe = (function() {
   var instructions = {
     type: jsPsychInstructions,
     pages: [
-      'In the next task, a + sign will appear in the middle of the screen, after which some lines of text will be briefly displayed and one will be replaced by either "<<" or ">>"',
-      'When you see "<<", press "z" on your keyboard. When you see ">>", press "m" on your keyboard. Try to respond as quickly as you can.',
+      'In the next task, a + sign will appear in the middle of the screen, after which some lines of text will be briefly displayed and one will be replaced by either "R" or "P"',
+      'When you see "R", press "r" on your keyboard. When you see "P", press "p" on your keyboard. Try to respond as quickly as you can.',
       'A set of practice trials will begin when you click "Next".'
     ],
     show_clickable_nav: true
@@ -110,8 +109,8 @@ var dot_probe = (function() {
       trial_n++;
       dot_probe_data = {
         trial_n: trial_n,
-        top_stim: '',
-        bottom_stim: '',
+        left_stim: '',
+        right_stim: '',
         probe_location: '',
         probe_direction: '',
         response_direction: '',
@@ -154,28 +153,28 @@ var dot_probe = (function() {
       var valence = jsPsych.timelineVariable('valence');
       dot_probe_data.valence_combo = valence.toString();
       if (Math.random() < 0.5) {
-        dot_probe_data.top_stim = stim[0];
-        dot_probe_data.top_valence = valence[0];
-        dot_probe_data.bottom_stim = stim[1];
-        dot_probe_data.bottom_valence = valence[1];
+        dot_probe_data.left_stim = stim[0];
+        dot_probe_data.left_valence = valence[0];
+        dot_probe_data.right_stim = stim[1];
+        dot_probe_data.right_valence = valence[1];
       } else {
-        dot_probe_data.top_stim = stim[1];
-        dot_probe_data.top_valence = valence[1];
-        dot_probe_data.bottom_stim = stim[0];
-        dot_probe_data.bottom_valence = valence[0];
+        dot_probe_data.left_stim = stim[1];
+        dot_probe_data.left_valence = valence[1];
+        dot_probe_data.right_stim = stim[0];
+        dot_probe_data.right_valence = valence[0];
       }
 
       // Draw stim
       ctx.textBaseline = 'middle';
       ctx.textAlign = 'right';
       ctx.fillText(
-        dot_probe_data.top_stim,
+        dot_probe_data.left_stim,
         1/2 * canv.width - word_sep/2,
         1/2 * canv.height
       );
       ctx.textAlign = 'left';
       ctx.fillText(
-        dot_probe_data.bottom_stim,
+        dot_probe_data.right_stim,
         1/2 * canv.width + word_sep/2,
         1/2 * canv.height
       );
@@ -207,40 +206,43 @@ var dot_probe = (function() {
       } else {
         // Condition-wise
         if (cond == 'cong') {
-          if (dot_probe_data.top_valence == 'neutral') {
+          if (dot_probe_data.left_valence == 'neutral') {
             dot_probe_data.probe_location = 'right';
           } else {
             dot_probe_data.probe_location = 'left';
           }
         } else {
-          if (dot_probe_data.top_valence == 'neutral') {
+          if (dot_probe_data.left_valence == 'neutral') {
             dot_probe_data.probe_location = 'left';
           } else {
             dot_probe_data.probe_location = 'right';
           }
         }
       }
+      var probe;
+      if (Math.random() < 0.5) {
+        dot_probe_data.probe_direction = 'left';
+        probe = 'R';
+      } else {
+        dot_probe_data.probe_direction = 'right';
+        probe = 'P';
+      }
+
+      var n_spaces = Math.floor(dot_probe_data.left_stim.length);
       if (dot_probe_data.probe_location == 'left') {
-        probe_location_ppn_x = 1/2 * canv.width - probe_sep/2;
+        ctx.textAlign = 'right';
+        probe = probe + ' '.repeat(n_spaces);
+        probe_location_ppn_x = 1/2 * canv.width - word_sep/2;
         probe_location_ppn_y = 1/2 * canv.height;
       } else {
-        probe_location_ppn_x = 1/2 * canv.width + probe_sep/2;
+        ctx.textAlign = 'left';
+        probe = ' '.repeat(n_spaces) + probe;
+        probe_location_ppn_x = 1/2 * canv.width + word_sep/2;
         probe_location_ppn_y = 1/2 * canv.height;
       }
       dot_probe_data.probe_replaces = dot_probe_data[dot_probe_data.probe_location + '_valence'];
 
-      // ...and direction
-      var probe;
-      if (Math.random() < 0.5) {
-        dot_probe_data.probe_direction = 'left';
-        probe = '<<';
-      } else {
-        dot_probe_data.probe_direction = 'right';
-        probe = '>>';
-      }
-
       // Draw probe
-      ctx.textAlign = 'center';
       ctx.textBaseline = 'center';
       ctx.fillText(
         probe,
@@ -288,7 +290,7 @@ var dot_probe = (function() {
         var last_trial = data.trials[4];
         var should_repeat;
         if (last_trial.response.response_direction != last_trial.response.probe_direction) {
-          alert('Remember, press "z" when the arrows point to the left ("<<") and press "m" when the arrows point to the right (">>")')
+          alert('Remember, press "r" when you see "R" and press "p" when you see "P"')
           should_repeat = true;
         } else {
           should_repeat = false;
