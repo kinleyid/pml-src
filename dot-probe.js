@@ -212,6 +212,7 @@ var dot_probe = (function() {
       }
       var probe;
       var direction = jsPsych.timelineVariable('direction');
+      dot_probe_data.probe_direction = direction;
       if (direction == 'left') {
         probe = 'R';
       } else {
@@ -281,7 +282,7 @@ var dot_probe = (function() {
       loop_function: function(data) {
         var last_trial = data.trials[4];
         var should_repeat;
-        if (last_trial.response.response_direction != last_trial.response.probe_direction) {
+        if (dot_probe_data.response_direction != dot_probe_data.probe_direction) {
           alert('Remember, press "r" when you see "R" and press "p" when you see "P"')
           should_repeat = true;
         } else {
