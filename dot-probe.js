@@ -87,7 +87,8 @@ var dot_probe = (function() {
       pixels_per_unit: 100,
   };
 
-  var visual_sep = 40;
+  var word_sep = 40;
+  var probe_sep = 70;
 
   var stim_font = 'bold 36px Courier New';
   var dot_probe_data = {}
@@ -169,13 +170,13 @@ var dot_probe = (function() {
       ctx.textAlign = 'right';
       ctx.fillText(
         dot_probe_data.top_stim,
-        1/2 * canv.width - visual_sep/2,
+        1/2 * canv.width - word_sep/2,
         1/2 * canv.height
       );
       ctx.textAlign = 'left';
       ctx.fillText(
         dot_probe_data.bottom_stim,
-        1/2 * canv.width + visual_sep/2,
+        1/2 * canv.width + word_sep/2,
         1/2 * canv.height
       );
     }
@@ -220,10 +221,10 @@ var dot_probe = (function() {
         }
       }
       if (dot_probe_data.probe_location == 'left') {
-        probe_location_ppn_x = 1/2 * canv.width - visual_sep/2;
+        probe_location_ppn_x = 1/2 * canv.width - probe_sep/2;
         probe_location_ppn_y = 1/2 * canv.height;
       } else {
-        probe_location_ppn_x = 1/2 * canv.width + visual_sep;
+        probe_location_ppn_x = 1/2 * canv.width + probe_sep/2;
         probe_location_ppn_y = 1/2 * canv.height;
       }
       dot_probe_data.probe_replaces = dot_probe_data[dot_probe_data.probe_location + '_valence'];
