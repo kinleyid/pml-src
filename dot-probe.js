@@ -183,7 +183,7 @@ var dot_probe = (function() {
 
   var dot_probe_probe = {
     type: jsPsychCanvasKeyboardResponse,
-    choices: ['z', 'm'],
+    choices: ['r', 'p'],
     stimulus: function(canv) {
       // Set up canvas
       var ctx = canv.getContext('2d');
@@ -252,7 +252,7 @@ var dot_probe = (function() {
     },
     on_finish: function(data) {
       if (data.response) {
-        if (data.response == 'z') {
+        if (data.response == 'r') {
           dot_probe_data.response_direction = 'left';
         } else {
           dot_probe_data.response_direction = 'right';
