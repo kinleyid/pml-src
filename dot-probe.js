@@ -96,7 +96,7 @@ var dot_probe = (function() {
   var instructions = {
     type: jsPsychInstructions,
     pages: [
-      'In the next task, a + sign will appear in the middle of the screen, after which some lines of text will be briefly displayed and one will be replaced by either "R" or "P"',
+      'In the next task, a + sign will appear in the middle of the screen, after which some words will be briefly displayed and one will be replaced by either "R" or "P"',
       'When you see "R", press "r" on your keyboard. When you see "P", press "p" on your keyboard. Try to respond as quickly as you can.',
       'A set of practice trials will begin when you click "Next".'
     ],
@@ -121,6 +121,7 @@ var dot_probe = (function() {
 
   var fixation_cross = {
     type: jsPsychCanvasKeyboardResponse,
+    canvas_size: [200, 800],
     trial_duration: 1000,
     choices: 'NO_KEYS',
     stimulus: function(canv) {
@@ -139,6 +140,7 @@ var dot_probe = (function() {
 
   var dot_probe_stim = {
     type: jsPsychCanvasKeyboardResponse,
+    canvas_size: [200, 800],
     trial_duration: 500,
     choices: 'NO_KEYS',
     stimulus: function(canv) {
@@ -184,6 +186,7 @@ var dot_probe = (function() {
 
   var dot_probe_probe = {
     type: jsPsychCanvasKeyboardResponse,
+    canvas_size: [200, 800],
     choices: ['r', 'p'],
     stimulus: function(canv) {
       // Set up canvas
