@@ -218,6 +218,7 @@ var dot_probe = (function() {
         dot_probe_data.probe_direction = 'right';
         probe = 'P';
       }
+      dot_probe_data.probe = probe;
 
       var n_spaces = Math.floor(dot_probe_data.left_stim.length/2);
       if (dot_probe_data.probe_location == 'left') {
@@ -242,6 +243,7 @@ var dot_probe = (function() {
       );
     },
     on_finish: function(data) {
+      dot_probe_data.response = data.response;
       if (data.response) {
         if (data.response == 'r') {
           dot_probe_data.response_direction = 'left';
