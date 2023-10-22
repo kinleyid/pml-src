@@ -99,7 +99,8 @@ var dot_probe = (function() {
       'When you see "R", press "r" on your keyboard. When you see "P", press "p" on your keyboard. Try to respond as quickly as you can.',
       'A set of practice trials will begin when you click "Next".'
     ],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+    post_trial_gap: 3000
   }
 
   var reset_data = {
@@ -307,6 +308,7 @@ var dot_probe = (function() {
       'End of practice. The real task will begin when you click "Next".'
     ],
     show_clickable_nav: true,
+    post_trial_gap: 3000,
     on_finish: function(data) {
       data.end_practice = true;
     }
